@@ -1,56 +1,48 @@
-# Adversarial Reprogramming of Neural Networks
-TensorFlow implementation of Adversarial Reprogramming of Neural Networks https://arxiv.org/abs/1806.11146
+# DuENNA: Towards Securing DNN Model Deployment
+TensorFlow implementation of DuENNA(KDD2021-219)
 
 ## Setup
 
 ### Prerequisites
-- Python 2.7 or 3.x 
-- TensorFlow 1.4 or higher
-([install instructions](https://www.tensorflow.org/install/))
-### Getting Started
-- Clone this repo:
-```bash
-git clone git@github.com:lizhuorong/Adversarial-Reprogramming-tensorflow.git
-cd Adversarial-Reprogramming-tensorflow
-```
+- Python 3.6 
+- TensorFlow 1.14 
+
 ### Download the imagenet models
-Download the following pre-trained models and put them into './model':
-- [resnet_v2_50](http://download.tensorflow.org/models/resnet_v2_50_2017_04_14.tar.gz)
-- [inception_v3](http://download.tensorflow.org/models/inception_v3_2016_08_28.tar.gz)
-- [vgg_16](http://download.tensorflow.org/models/vgg_16_2016_08_28.tar.gz)
-- More imagenet models can be found [here](https://github.com/tensorflow/models/tree/master/research/slim)
+Download the following pre-trained models https://github.com/tensorflow/models/tree/master/research/slim
+Put them into './model/model_name':
+
+- [resnet_v2_50]
+- [resnet_v2_101]
+- [resnet_v2_152]
+- [inception_v3]
+- [inception_resnet_v2]
+- [inception_v4]
+- [inception_v5]
+- [vgg_16]
+- [vgg_19]
+- [MobileNet_v1_0.25]
+- [MobileNet_v1_0.5]
+
 
 ### Datasets
-- MNIST dataset will be automatically downloaded after running the scripts. 
-- CIFAR-10. Training on CIFAR-10 have not been implemented yet. However, it is easy to adapt to more datasets and imagenet models.
+- MNIST, FASHION-MNIST and ANDROIDZOO dateset have been saved in 'dataset' fold
+
 ## Train
-Simply run the following command:
+Simply run the following command to show an example:
 ```
- python main.py 
+python main.py --network_name mobilenet_v1_128 --dataset mnist --mapping 1
 ```
-You can train adversarial images for other ImageNet classifiers as well. <br>
-For example, if you want to adversarially reprogram Inception-ResNet-v2, first you need to insert `from nets import inception_resnet_v2` in `model.py`. <br>
-Then run:
-```
- python main.py --network_name inception_resnet_v2
-```
-- More available networks can be found in the subfolder `./nets`, which is derived from [slim](https://github.com/tensorflow/models/tree/master/research/slim).
-- Checkpoint files will be saved in `./train` and you are able to continue training your model from the previous epoch. 
-- Sampled images can be found in `./sample`. Following are the examples that repurposing the ImageNet classifiers to MNIST classficaion.  ( top: Inception_V3 ; bottom : Resnet_v2_50)
+To be specific:
+'network_name' is the pre-trained models and it can be chosen from
+['inception_resnet_v2','inception_v3','inception_v4','resnet_v2_50','resnet_v2_101','resnet_v2_152','vgg_16','vgg_19','mobilenet_v1_128','mobilenet_v1_64'] 
 
-<img src="imgs/concat.jpg" width="600px"/>
+'mapping' is the number of the back-end model's layer, it can be chosen from [1,2,3]
 
-## Test
-Test will be performed immediately after training finished.
+'dataset' is the task name for we want to train, it can be chosen from ['mnist','f_mnist','app']
 
 ## Results
-The performance of adversarially reprogramming the trained ImageNet classifiers to perform MNIST classification.
-Table gives test accuracy of reprogrammed networks on an MNIST classification task.
+The performance of the model will be shown in every epoch, and some results will be saved in 'result'
 
-| ImageNet Model | MNIST |
-|------|-------|
-|Resnet_v2_50| 0.9586 |
-|Inception_v3| 0.9745 |
 
 ## Acknowledgments
 Code referred to a [Pytorch implementation](https://github.com/Prinsphield/Adversarial_Reprogramming). 
