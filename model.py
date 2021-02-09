@@ -10,7 +10,7 @@
 
 # MNIST dataset will be automatically downloaded after running the scripts.
 
-import cv2
+# import cv2
 import numpy as np
 import os
 import random

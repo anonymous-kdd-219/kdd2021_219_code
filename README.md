@@ -49,4 +49,4 @@ The performance of the model will be shown in every epoch, and some results will
 
 
 ## Acknowledgments
-Code referred to  [Pytorch implementation](https://github.com/Prinsphield/Adversarial_Reprogramming). 
+Code referred to [Adversarial Reprogramming](https://github.com/Prinsphield/Adversarial_Reprogramming). 
