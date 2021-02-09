@@ -105,7 +105,7 @@ class Adversarial_Reprogramming(object):
             self.central_size = 28
 
         elif self.dataset == 'app':
-            app_dataset = np.array(np.load('./datasets/app/dataset_norepeat.npy'), dtype=np.float32)  #######new_dataset    begin = 45000     dataset_norepeat begin = 20000
+            app_dataset = np.array(np.load('./datasets/app/dataset_norepeat.npy'), dtype=np.float32)  
             count_0 = 0
             count_1 = 0
             begin = 20000
@@ -245,11 +245,7 @@ class Adversarial_Reprogramming(object):
         self.C = tf.multiply(self.C, self.M)
         #加上嵌入的图片
         self.X_adv = self.X + self.P+self.C 
-        # self.channels = tf.split(self.X_adv, axis=3, num_or_size_splits=3)
-        # for i in range(3):
-        #     self.channels[i] -= means[i]
-        #     self.channels[i] /= std[i]
-        # self.X_adv =tf.concat(self.X_adv,axis=3) 
+
         
         return self.X_adv
     
@@ -290,12 +286,6 @@ class Adversarial_Reprogramming(object):
                 self.disturbed_logits = tf.matmul(self.disturbed_logits,self.mapping2)
             init_fn = slim.assign_from_checkpoint_fn(model_path,slim.get_model_variables(network_scope_name[self.network_name]))
 
-            # with open("var.txt","w") as f:
-            #     for var_name, _ in tf.contrib.framework.list_variables(
-            #                 model_path):
-
-            #         f.write(var_name+"\n")
-            # input()
 
         ## loss function
         self.cross_entropy_loss = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels = Y,logits = self.disturbed_logits))
@@ -378,12 +368,6 @@ class Adversarial_Reprogramming(object):
 
                 _, W,mapping,train_loss, img_X_adv,X,P,C = sess.run([optimizer1,self.W, self.mapping,self.loss, self.X_adv,self.X , self.P,self.C ],\
                                          feed_dict = {input_images:image_batch, Y:label_batch})
-                # _ = sess.run([optimizer1],\
-                #                          feed_dict = {input_images:image_batch, Y:label_batch})
-                # _ = sess.run([optimizer1],\
-                #                          feed_dict = {input_images:image_batch, Y:label_batch})
-                # _ = sess.run([optimizer1],\
-                #                          feed_dict = {input_images:image_batch, Y:label_batch})
 
 
                 print('train_loss:{:.4f}'.format(train_loss),"epoch:",epoch,"batch:",batch,"total_batch:",total_batch) 
@@ -396,8 +380,8 @@ class Adversarial_Reprogramming(object):
                 test_acc_sum += test_batch_acc
             test_acc = str(float(test_acc_sum/test_total_batch))
             acc_dir = self.result_dir + '/test_acc.txt'
-            with open(acc_dir,'a') as file_handle:   # .txt可以不自己新建,代码会自动新建
-                file_handle.write(test_acc+" ")     # 写入
+            with open(acc_dir,'a') as file_handle:   
+                file_handle.write(test_acc+" ")   
                 file_handle.write('\n')    
 
             print('test_acc:{:.4f}'.format(float(test_acc_sum/test_total_batch)),"################") 
