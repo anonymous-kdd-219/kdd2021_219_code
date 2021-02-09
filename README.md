@@ -6,6 +6,10 @@ TensorFlow implementation of DuENNA(KDD2021-219)
 ### Prerequisites
 - Python 3.6 
 - TensorFlow 1.14 
+- numpy
+- tf_slim
+- scipy 1.2.1
+- pillow
 
 ### Download the imagenet models
 Download the following pre-trained models https://github.com/tensorflow/models/tree/master/research/slim
@@ -45,4 +49,4 @@ The performance of the model will be shown in every epoch, and some results will
 
 
 ## Acknowledgments
-Code referred to a [Pytorch implementation](https://github.com/Prinsphield/Adversarial_Reprogramming). 
+Code referred to  [Pytorch implementation](https://github.com/Prinsphield/Adversarial_Reprogramming). 
